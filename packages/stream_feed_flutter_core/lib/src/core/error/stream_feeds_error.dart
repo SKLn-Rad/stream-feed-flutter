@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
 import 'package:stream_feed_flutter_core/src/core/api/responses.dart';
 import 'package:stream_feed_flutter_core/src/core/error/feeds_error_code.dart';
+import 'package:stream_feed_flutter_core/stream_feed_flutter_core.dart';
 
 /// A custom [Exception] for printing Stream Feeds specific errors.
 class StreamFeedsError with EquatableMixin implements Exception {
@@ -42,10 +43,11 @@ class StreamFeedsNetworkError extends StreamFeedsError {
   factory StreamFeedsNetworkError.fromDioError(DioError error) {
     final response = error.response;
     ErrorResponse? errorResponse;
-    final data = json.decode(response?.data);
-    if (data != null) {
+    final data = json.decodeSafe(response?.data);
+    if (data.isEmpty) {
       errorResponse = ErrorResponse.fromJson(data);
     }
+    
     return StreamFeedsNetworkError.raw(
       code: errorResponse?.code ?? -1,
       message: errorResponse?.message ??
