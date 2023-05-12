@@ -4,7 +4,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 import 'package:rxdart/rxdart.dart';
-import 'package:stream_feed/stream_feed.dart';
+import 'package:stream_feed_flutter_core/stream_feed_flutter_core.dart';
 import 'package:stream_feed_flutter_core/src/bloc/activities_manager.dart';
 import 'package:stream_feed_flutter_core/src/bloc/grouped_activities_manager.dart';
 import 'package:stream_feed_flutter_core/src/bloc/reactions_manager.dart';

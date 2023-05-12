@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:stream_feed/stream_feed.dart';
+import 'package:stream_feed_flutter_core/stream_feed_flutter_core.dart';
 import 'package:stream_feed_flutter_core/src/bloc/feed_bloc.dart';
 
 class FeedProvider extends GenericFeedProvider<User, String, String, String> {

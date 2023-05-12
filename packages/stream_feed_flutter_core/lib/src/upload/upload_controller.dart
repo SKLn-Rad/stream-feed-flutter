@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:rxdart/rxdart.dart';
-import 'package:stream_feed/stream_feed.dart';
+import 'package:stream_feed_flutter_core/stream_feed_flutter_core.dart';
 import 'package:stream_feed_flutter_core/src/media.dart';
 import 'package:stream_feed_flutter_core/src/upload/states.dart';
 
