@@ -29,7 +29,6 @@ dependencies:
   jose: ^0.3.2
   json_annotation: ^4.4.0
   logging: ^1.0.1
-  meta: ^1.3.0
   mime: ^1.0.0
 
 dev_dependencies:
