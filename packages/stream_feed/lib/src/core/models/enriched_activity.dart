@@ -66,24 +66,16 @@ class GenericEnrichedActivity<A, Ob, T, Or> extends Equatable {
   ]) =>
       _$GenericEnrichedActivityFromJson<A, Ob, T, Or>(
         Serializer.moveKeysToRoot(json, topLevelFields)!,
-        fromJsonA ??
-            (jsonA) => (A == User)
-                ? User.fromJson(jsonA! as Map<String, dynamic>) as A
-                : jsonA as A,
+        fromJsonA ?? (jsonA) => (A == User) ? User.fromObject(jsonA) as A : jsonA as A,
         fromJsonOb ??
-            (jsonOb) => (Ob ==
-                    CollectionEntry) // TODO: can be a list of collection entry and a list of activities
-                ? CollectionEntry.fromJson(jsonOb! as Map<String, dynamic>)
-                    as Ob
+            (jsonOb) => (Ob == CollectionEntry) // TODO: can be a list of collection entry and a list of activities
+                ? CollectionEntry.fromJson(jsonOb! as Map<String, dynamic>) as Ob
                 : jsonOb as Ob,
-        fromJsonT ??
-            (jsonT) => (T == Activity)
-                ? Activity.fromJson(jsonT! as Map<String, dynamic>) as T
-                : jsonT as T,
+        fromJsonT ?? (jsonT) => (T == Activity) ? Activity.fromJson(jsonT! as Map<String, dynamic>) as T : jsonT as T,
         fromJsonOr ??
             (jsonOr) {
               if (Or == User) {
-                return User.fromJson(jsonOr! as Map<String, dynamic>) as Or;
+                return User.fromObject(jsonOr) as Or;
               } else if (Or == Reaction) {
                 return Reaction.fromJson(jsonOr! as Map<String, dynamic>) as Or;
               } else {
@@ -264,8 +256,5 @@ class GenericEnrichedActivity<A, Ob, T, Or> extends Equatable {
     Object? Function(T value) toJsonT,
     Object? Function(Or value) toJsonOr,
   ) =>
-      Serializer.moveKeysToMapInPlace(
-          _$GenericEnrichedActivityToJson(
-              this, toJsonA, toJsonOb, toJsonT, toJsonOr),
-          topLevelFields);
+      Serializer.moveKeysToMapInPlace(_$GenericEnrichedActivityToJson(this, toJsonA, toJsonOb, toJsonT, toJsonOr), topLevelFields);
 }

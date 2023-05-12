@@ -27,6 +27,18 @@ class User extends Equatable {
   /// Create a new instance from a JSON object
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
 
+  static User fromObject(Object? obj) {
+    if (obj != null && obj is Map<String, dynamic>) {
+      return User.fromJson(obj);
+    }
+
+    if (obj != null) {
+      return User(id: obj.toString());
+    }
+
+    throw ArgumentError('Cannot parse user from $obj');
+  }
+
   ///	The unique identifier for the new user (eg. username, user id, etc.).
   ///
   /// The value is restricted to alphanumeric characters, dashes and

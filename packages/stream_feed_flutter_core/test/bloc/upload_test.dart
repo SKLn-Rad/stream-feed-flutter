@@ -66,7 +66,7 @@ void main() {
         when(() => mockFiles.upload(audioAttachment,
             cancelToken: mockCancelToken,
             onSendProgress: any(named: 'onSendProgress'))).thenThrow(DioError(
-          requestOptions: RequestOptions(path: ''),
+          requestOptions: RequestOptions(),
           type: DioErrorType.cancel,
         ));
         final bloc = UploadController(mockClient)
@@ -207,7 +207,7 @@ void main() {
         when(() => mockImages.upload(attachment,
             cancelToken: mockCancelToken,
             onSendProgress: any(named: 'onSendProgress'))).thenThrow(DioError(
-          requestOptions: RequestOptions(path: ''),
+          requestOptions: RequestOptions(),
           type: DioErrorType.cancel,
         ));
         final bloc = UploadController(mockClient)

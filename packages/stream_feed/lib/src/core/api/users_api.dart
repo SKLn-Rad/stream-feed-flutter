@@ -26,7 +26,8 @@ class UsersAPI {
       queryParameters: {'get_or_create': getOrCreate},
       data: user,
     );
-    return User.fromJson(result.data!);
+
+    return User.fromObject(result.data);
   }
 
   /// Get data for a single user
@@ -41,7 +42,8 @@ class UsersAPI {
       headers: {'Authorization': '$token'},
       queryParameters: {'with_follow_counts': withFollowCounts},
     );
-    return User.fromJson(result.data);
+
+    return User.fromObject(result.data);
   }
 
   /// Update a single user
@@ -53,7 +55,8 @@ class UsersAPI {
       headers: {'Authorization': '$token'},
       data: updatedUser,
     );
-    return User.fromJson(result.data);
+
+    return User.fromObject(result.data);
   }
 
   /// Delete a single user

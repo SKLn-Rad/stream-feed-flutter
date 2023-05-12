@@ -12,9 +12,7 @@ part 'paginated_reactions.g.dart';
 @JsonSerializable(createToJson: true, genericArgumentFactories: true)
 class PaginatedReactions<A, Ob, T, Or> extends Paginated<Reaction> {
   /// Builds a [PaginatedReactions].
-  const PaginatedReactions(
-      {String? next, List<Reaction>? results, this.activity, String? duration})
-      : super(next, results, duration);
+  const PaginatedReactions({String? next, List<Reaction>? results, this.activity, String? duration}) : super(next, results, duration);
 
   /// Deserialize json to [PaginatedReactions]
   factory PaginatedReactions.fromJson(
@@ -26,23 +24,13 @@ class PaginatedReactions<A, Ob, T, Or> extends Paginated<Reaction> {
   ]) =>
       _$PaginatedReactionsFromJson<A, Ob, T, Or>(
         json,
-        fromJsonA ??
-            (jsonA) => (A == User)
-                ? User.fromJson(jsonA! as Map<String, dynamic>) as A
-                : jsonA as A,
-        fromJsonOb ??
-            (jsonOb) => (Ob == CollectionEntry)
-                ? CollectionEntry.fromJson(jsonOb! as Map<String, dynamic>)
-                    as Ob
-                : jsonOb as Ob,
-        fromJsonT ??
-            (jsonT) => (T == Activity)
-                ? Activity.fromJson(jsonT! as Map<String, dynamic>) as T
-                : jsonT as T,
+        fromJsonA ?? (jsonA) => (A == User) ? User.fromObject(jsonA) as A : jsonA as A,
+        fromJsonOb ?? (jsonOb) => (Ob == CollectionEntry) ? CollectionEntry.fromJson(jsonOb! as Map<String, dynamic>) as Ob : jsonOb as Ob,
+        fromJsonT ?? (jsonT) => (T == Activity) ? Activity.fromJson(jsonT! as Map<String, dynamic>) as T : jsonT as T,
         fromJsonOr ??
             (jsonOr) {
               if (Or == User) {
-                return User.fromJson(jsonOr! as Map<String, dynamic>) as Or;
+                return User.fromObject(jsonOr) as Or;
               } else if (Or == Reaction) {
                 return Reaction.fromJson(jsonOr! as Map<String, dynamic>) as Or;
               } else {

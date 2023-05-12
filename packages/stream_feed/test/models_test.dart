@@ -11,15 +11,8 @@ import 'utils.dart';
 void main() {
   group('EnrichmentFlags', () {
     test('combination', () {
-      final flags = EnrichmentFlags()
-          .withReactionCounts()
-          .withOwnReactions()
-          .withRecentReactions();
-      expect(flags.params, {
-        'with_reaction_counts': true,
-        'with_own_reactions': true,
-        'with_recent_reactions': true
-      });
+      final flags = EnrichmentFlags().withReactionCounts().withOwnReactions().withRecentReactions();
+      expect(flags.params, {'with_reaction_counts': true, 'with_own_reactions': true, 'with_recent_reactions': true});
     });
 
     test('withOwnChildren', () {
@@ -34,8 +27,7 @@ void main() {
 
     test('withUserReactions', () {
       final withUserReactions = EnrichmentFlags().withUserReactions('userId');
-      expect(withUserReactions.params,
-          {'with_own_reactions': true, 'user_id': 'userId'});
+      expect(withUserReactions.params, {'with_own_reactions': true, 'user_id': 'userId'});
     });
 
     test('withRecentReactions', () {
@@ -44,10 +36,8 @@ void main() {
     });
 
     test('reactionKindFilter', () {
-      final reactionKindFilter =
-          EnrichmentFlags().reactionKindFilter(['kind1', 'kind2']);
-      expect(
-          reactionKindFilter.params, {'reaction_kinds_filter': 'kind1,kind2'});
+      final reactionKindFilter = EnrichmentFlags().reactionKindFilter(['kind1', 'kind2']);
+      expect(reactionKindFilter.params, {'reaction_kinds_filter': 'kind1,kind2'});
     });
 
     test('withReactionCounts', () {
@@ -57,8 +47,7 @@ void main() {
 
     test('withUserChildren', () {
       final withUserChildren = EnrichmentFlags().withUserChildren('userId');
-      expect(withUserChildren.params,
-          {'with_own_children': true, 'user_id': 'userId'});
+      expect(withUserChildren.params, {'with_own_children': true, 'user_id': 'userId'});
     });
   });
 
@@ -98,8 +87,7 @@ void main() {
 
     test('toJson simple', () {
       final toJson = followStats.toJson();
-      expect(
-          toJson, {'followers': 'user:jessica', 'following': 'user:jessica'});
+      expect(toJson, {'followers': 'user:jessica', 'following': 'user:jessica'});
     });
 
     test('toJson slugs', () {
@@ -126,8 +114,7 @@ void main() {
 
   group('RealtimeMessage', () {
     test('fromJson', () {
-      final fromJson = RealtimeMessage<String, String, String, String>.fromJson(
-          jsonFixture('realtime_message.json'));
+      final fromJson = RealtimeMessage<String, String, String, String>.fromJson(jsonFixture('realtime_message.json'));
 
       expect(
         fromJson,
@@ -138,8 +125,7 @@ void main() {
               actor: 'reward:1',
               id: 'f3de8328-be2d-11eb-bb18-128a130028af',
               extraData: const {
-                'message':
-                    "@Jessica check out getstream.io it's so dang awesome.",
+                'message': "@Jessica check out getstream.io it's so dang awesome.",
               },
               target: 'test',
               origin: 'test',
@@ -171,19 +157,10 @@ void main() {
                 createdAt: DateTime.parse('2021-04-13 22:53:19.000Z'),
                 updatedAt: DateTime.parse('2021-04-13 22:53:19.000Z'),
                 id: 'eTHVBnEm0FQB2HeaRKVlEfVf58B3personal',
-                data: const {
-                  'gender': 'Male',
-                  'name': 'Rickey Lee',
-                  'photo':
-                      'https://firebasestorage.googleapis.com/v0/b/fire-snab.appspot.com/o/profile-image-placeholder.png?alt=media&token=b17598bb-a510-4167-8354-ab75642ba89e'
-                },
+                data: const {'gender': 'Male', 'name': 'Rickey Lee', 'photo': 'https://firebasestorage.googleapis.com/v0/b/fire-snab.appspot.com/o/profile-image-placeholder.png?alt=media&token=b17598bb-a510-4167-8354-ab75642ba89e'},
               ),
               extraData: const {
-                'createdTask': {
-                  'id': '32db0f46-3593-4e14-aa57-f05af4887260',
-                  'title': 'KeyPack',
-                  'isFinished': true
-                },
+                'createdTask': {'id': '32db0f46-3593-4e14-aa57-f05af4887260', 'title': 'KeyPack', 'isFinished': true},
                 'group': 'updated_2021-06-09',
               },
             )
@@ -194,8 +171,7 @@ void main() {
   });
 
   test('EnrichedActivity issue 61', () {
-    final enrichedActivity =
-        GenericEnrichedActivity<User, String, String, String?>.fromJson(
+    final enrichedActivity = GenericEnrichedActivity<User, String, String, String?>.fromJson(
       jsonFixture('enriched_activity_issue61.json'),
     );
     expect(enrichedActivity.latestReactions, isNotNull);
@@ -246,9 +222,7 @@ void main() {
     );
 
     final enrichedActivityJson = json.decode(fixture('enriched_activity.json'));
-    final enrichedActivityFromJson =
-        GenericEnrichedActivity<String, String, String, String>.fromJson(
-            enrichedActivityJson);
+    final enrichedActivityFromJson = GenericEnrichedActivity<String, String, String, String>.fromJson(enrichedActivityJson);
     expect(enrichedActivityFromJson, enrichedActivity);
     // we will never get “extra_data” from the api
     //that's why it's not explicit in the json fixture
@@ -306,10 +280,8 @@ void main() {
       },
     );
 
-    final enrichedActivityJson =
-        json.decode(fixture('enriched_activity_collection_entry.json'));
-    final enrichedActivityFromJson = GenericEnrichedActivity<String,
-        CollectionEntry, String, String>.fromJson(
+    final enrichedActivityJson = json.decode(fixture('enriched_activity_collection_entry.json'));
+    final enrichedActivityFromJson = GenericEnrichedActivity<String, CollectionEntry, String, String>.fromJson(
       enrichedActivityJson,
     );
     expect(enrichedActivityFromJson, enrichedActivity);
@@ -344,8 +316,7 @@ void main() {
     });
 
     test('copyWith', () {
-      final activityCopiedWith =
-          activity.copyWith(extraData: {'popularity': 10});
+      final activityCopiedWith = activity.copyWith(extraData: {'popularity': 10});
       expect(activityCopiedWith.extraData, {'popularity': 10});
     });
   });
@@ -378,8 +349,7 @@ void main() {
 
     final groupJson = json.decode(fixture('group.json'));
     // expect(groupJson, matcher)
-    final groupFromJson = Group.fromJson(
-        groupJson, (e) => Activity.fromJson(e as Map<String, dynamic>?));
+    final groupFromJson = Group.fromJson(groupJson, (e) => Activity.fromJson(e as Map<String, dynamic>?));
 
     expect(groupFromJson, group);
     expect(group.toJson((activity) => activity.toJson()), {
@@ -409,18 +379,14 @@ void main() {
   });
 
   test('ForeignIdTimePair equatable', () {
-    final foreignIdTimePair =
-        ForeignIdTimePair('foreignID', DateTime(2021, 03, 03));
-    final otherForeignIdTimePair =
-        ForeignIdTimePair('foreignID', DateTime(2021, 04, 03));
+    final foreignIdTimePair = ForeignIdTimePair('foreignID', DateTime(2021, 03, 03));
+    final otherForeignIdTimePair = ForeignIdTimePair('foreignID', DateTime(2021, 04, 03));
     expect(foreignIdTimePair, otherForeignIdTimePair);
   });
 
   test('NotificationFeedMeta', () {
-    const notificationFeedMeta =
-        NotificationFeedMeta(unreadCount: 1, unseenCount: 1);
-    expect(NotificationFeedMeta.fromJson(const {'unread': 1, 'unseen': 1}),
-        notificationFeedMeta);
+    const notificationFeedMeta = NotificationFeedMeta(unreadCount: 1, unseenCount: 1);
+    expect(NotificationFeedMeta.fromJson(const {'unread': 1, 'unseen': 1}), notificationFeedMeta);
   });
 
   group('NotificationGroup', () {
@@ -452,11 +418,8 @@ void main() {
     );
 
     test('fromJson', () {
-      final notificationGroupJson =
-          json.decode(fixture('notification_group.json'));
-      final notificationGroupFromJson = NotificationGroup.fromJson(
-          notificationGroupJson,
-          (e) => Activity.fromJson(e as Map<String, dynamic>?));
+      final notificationGroupJson = json.decode(fixture('notification_group.json'));
+      final notificationGroupFromJson = NotificationGroup.fromJson(notificationGroupJson, (e) => Activity.fromJson(e as Map<String, dynamic>?));
 
       expect(notificationGroupFromJson, notificationGroup);
     });
@@ -492,13 +455,7 @@ void main() {
   });
 
   group('CollectionEntry', () {
-    final entry = CollectionEntry(
-        id: 'test',
-        collection: 'test',
-        foreignId: 'test',
-        data: const {'test': 'test'},
-        createdAt: DateTime.parse('2001-09-11T00:01:02.000Z'),
-        updatedAt: DateTime.parse('2001-09-11T00:01:02.000Z'));
+    final entry = CollectionEntry(id: 'test', collection: 'test', foreignId: 'test', data: const {'test': 'test'}, createdAt: DateTime.parse('2001-09-11T00:01:02.000Z'), updatedAt: DateTime.parse('2001-09-11T00:01:02.000Z'));
 
     test('ref', () {
       expect(entry.ref, 'SO:test:test');
@@ -596,16 +553,8 @@ void main() {
   });
 
   test('PersonalizedFeed', () {
-    final json = {
-      'limit': 25,
-      'offset': 0,
-      'version': 'user_1_1619210635',
-      'next': '',
-      'results': [],
-      'duration': '419.81ms'
-    };
-    final personalizedFeed =
-        PersonalizedFeed<String, String, String, String>.fromJson(json);
+    final json = {'limit': 25, 'offset': 0, 'version': 'user_1_1619210635', 'next': '', 'results': [], 'duration': '419.81ms'};
+    final personalizedFeed = PersonalizedFeed<String, String, String, String>.fromJson(json);
 
     expect(
       personalizedFeed,
@@ -622,8 +571,7 @@ void main() {
 
   test('Paginated Activities', () {
     final json = {
-      'next':
-          '/api/v1.0/feed/user/1/?api_key=8rxdnw8pjmvb&id_lt=b253bfa1-83b3-11ec-8dc7-0a5c4613b2ff&limit=25',
+      'next': '/api/v1.0/feed/user/1/?api_key=8rxdnw8pjmvb&id_lt=b253bfa1-83b3-11ec-8dc7-0a5c4613b2ff&limit=25',
       'results': [
         {
           'actor': '1',
@@ -635,23 +583,13 @@ void main() {
       ],
       'duration': '419.81ms'
     };
-    final paginatedActivities =
-        PaginatedActivities<String, String, String, String>.fromJson(json);
+    final paginatedActivities = PaginatedActivities<String, String, String, String>.fromJson(json);
 
     expect(
       paginatedActivities,
       const PaginatedActivities(
-        next:
-            '/api/v1.0/feed/user/1/?api_key=8rxdnw8pjmvb&id_lt=b253bfa1-83b3-11ec-8dc7-0a5c4613b2ff&limit=25',
-        results: [
-          GenericEnrichedActivity(
-              actor: '1',
-              verb: 'tweet',
-              target: 'test',
-              object: 'test',
-              origin: 'test',
-              extraData: {})
-        ],
+        next: '/api/v1.0/feed/user/1/?api_key=8rxdnw8pjmvb&id_lt=b253bfa1-83b3-11ec-8dc7-0a5c4613b2ff&limit=25',
+        results: [GenericEnrichedActivity(actor: '1', verb: 'tweet', target: 'test', object: 'test', origin: 'test', extraData: {})],
         duration: '419.81ms',
       ),
     );
@@ -714,17 +652,10 @@ void main() {
       // },//TODO: test this
       childrenCounts: const {'test': 1},
     );
-    final paginatedReactions = PaginatedReactions(
-        next: 'test',
-        results: [reaction],
-        activity: enrichedActivity,
-        duration: 'duration');
+    final paginatedReactions = PaginatedReactions(next: 'test', results: [reaction], activity: enrichedActivity, duration: 'duration');
 
-    final paginatedReactionsJson =
-        json.decode(fixture('paginated_reactions.json'));
-    final paginatedReactionsFromJson =
-        PaginatedReactions<String, String, String, String>.fromJson(
-            paginatedReactionsJson);
+    final paginatedReactionsJson = json.decode(fixture('paginated_reactions.json'));
+    final paginatedReactionsFromJson = PaginatedReactions<String, String, String, String>.fromJson(paginatedReactionsJson);
     expect(paginatedReactionsFromJson, paginatedReactions);
     expect(
         paginatedReactions.toJson(
@@ -752,16 +683,7 @@ void main() {
             }
           ],
           'duration': 'duration',
-          'activity': {
-            'actor': 'test',
-            'verb': 'test',
-            'target': 'test',
-            'object': 'test',
-            'origin': 'test',
-            'foreign_id': 'test',
-            'time': '2001-09-11T00:01:02-00:00',
-            'test': 'test'
-          }
+          'activity': {'actor': 'test', 'verb': 'test', 'target': 'test', 'object': 'test', 'origin': 'test', 'foreign_id': 'test', 'time': '2001-09-11T00:01:02-00:00', 'test': 'test'}
         });
   });
 
@@ -788,13 +710,7 @@ void main() {
   });
 
   test('User', () {
-    final user = User(
-        id: 'test',
-        data: const {'test': 'test'},
-        createdAt: DateTime.parse('2001-09-11T00:01:02.000Z'),
-        updatedAt: DateTime.parse('2001-09-11T00:01:02.000Z'),
-        followersCount: 1,
-        followingCount: 1);
+    final user = User(id: 'test', data: const {'test': 'test'}, createdAt: DateTime.parse('2001-09-11T00:01:02.000Z'), updatedAt: DateTime.parse('2001-09-11T00:01:02.000Z'), followersCount: 1, followingCount: 1);
     final userJson = json.decode(fixture('user.json'));
     final userFromJson = User.fromJson(userJson);
     expect(userFromJson, user);
@@ -832,12 +748,7 @@ void main() {
 
   test('Follow', () {
     // const converter = DateTimeUTCConverter();
-    final followJson = {
-      'feed_id': 'timeline:feedId',
-      'target_id': 'user:userId',
-      'created_at': '2021-05-14T19:58:27.000Z',
-      'updated_at': '2021-05-14T19:58:27.000Z'
-    };
+    final followJson = {'feed_id': 'timeline:feedId', 'target_id': 'user:userId', 'created_at': '2021-05-14T19:58:27.000Z', 'updated_at': '2021-05-14T19:58:27.000Z'};
     final follow = Follow(
       feedId: 'timeline:feedId',
       targetId: 'user:userId',
@@ -856,16 +767,14 @@ void main() {
 
   test('FollowRelation', () {
     const follow = FollowRelation(source: 'feedId', target: 'targetId');
-    final followJson =
-        json.decode('{"source": "feedId", "target": "targetId"}');
+    final followJson = json.decode('{"source": "feedId", "target": "targetId"}');
 
     expect(follow, FollowRelation.fromJson(followJson));
     expect(follow.toJson(), {'source': 'feedId', 'target': 'targetId'});
   });
 
   group('Unfollow', () {
-    const unfollow = UnFollowRelation(
-        source: 'feedId', target: 'targetId', keepHistory: true);
+    const unfollow = UnFollowRelation(source: 'feedId', target: 'targetId', keepHistory: true);
 
     test('fromFollow', () {
       const follow = FollowRelation(source: 'feedId', target: 'targetId');
@@ -879,8 +788,7 @@ void main() {
     });
 
     test('toJson', () {
-      expect(unfollow.toJson(),
-          {'source': 'feedId', 'target': 'targetId', 'keep_history': true});
+      expect(unfollow.toJson(), {'source': 'feedId', 'target': 'targetId', 'keep_history': true});
     });
   });
 
@@ -894,10 +802,8 @@ void main() {
       );
 
       test('fromJson', () {
-        final activityUpdateJson =
-            json.decode(fixture('activity_update_with_foreign_id.json'));
-        final activityUpdateFromJson =
-            ActivityUpdate.fromJson(activityUpdateJson);
+        final activityUpdateJson = json.decode(fixture('activity_update_with_foreign_id.json'));
+        final activityUpdateFromJson = ActivityUpdate.fromJson(activityUpdateJson);
         expect(activityUpdateFromJson, foreignIdActivity);
       });
 
@@ -937,10 +843,8 @@ void main() {
       );
 
       test('fromJson', () {
-        final activityUpdateJson =
-            json.decode(fixture('activity_update_with_id.json'));
-        final activityUpdateFromJson =
-            ActivityUpdate.fromJson(activityUpdateJson);
+        final activityUpdateJson = json.decode(fixture('activity_update_with_id.json'));
+        final activityUpdateFromJson = ActivityUpdate.fromJson(activityUpdateJson);
         expect(activityUpdateFromJson, idActivity);
       });
 
@@ -971,8 +875,7 @@ void main() {
   });
 
   test('Location Names', () {
-    final locationNames =
-        Location.values.map((location) => location.name).toList();
+    final locationNames = Location.values.map((location) => location.name).toList();
     expect(locationNames, ['us-east', 'dublin', 'singapore', 'tokyo']);
   });
 
@@ -983,17 +886,11 @@ void main() {
     });
 
     test('Width should be a positive number', () {
-      expect(
-          () => Crop(-1, 10),
-          throwsA(predicate<AssertionError>(
-              (e) => e.message == 'Width should be a positive number')));
+      expect(() => Crop(-1, 10), throwsA(predicate<AssertionError>((e) => e.message == 'Width should be a positive number')));
     });
 
     test('Height should be a positive number', () {
-      expect(
-          () => Crop(10, -1),
-          throwsA(predicate<AssertionError>(
-              (e) => e.message == 'Height should be a positive number')));
+      expect(() => Crop(10, -1), throwsA(predicate<AssertionError>((e) => e.message == 'Height should be a positive number')));
     });
   });
 
@@ -1004,39 +901,26 @@ void main() {
     });
 
     test('Width should be a positive number', () {
-      expect(
-          () => Resize(-1, 10),
-          throwsA(predicate<AssertionError>(
-              (e) => e.message == 'Width should be a positive number')));
+      expect(() => Resize(-1, 10), throwsA(predicate<AssertionError>((e) => e.message == 'Width should be a positive number')));
     });
 
     test('Height should be a positive number', () {
-      expect(
-          () => Resize(10, -1),
-          throwsA(predicate<AssertionError>(
-              (e) => e.message == 'Height should be a positive number')));
+      expect(() => Resize(10, -1), throwsA(predicate<AssertionError>((e) => e.message == 'Height should be a positive number')));
     });
   });
 
   group('Thumbnail', () {
     test('params', () {
       const resize = Thumbnail(10, 10);
-      expect(resize.params,
-          {'resize': 'clip', 'crop': 'center', 'w': 10, 'h': 10});
+      expect(resize.params, {'resize': 'clip', 'crop': 'center', 'w': 10, 'h': 10});
     });
 
     test('Width should be a positive number', () {
-      expect(
-          () => Thumbnail(-1, 10),
-          throwsA(predicate<AssertionError>(
-              (e) => e.message == 'Width should be a positive number')));
+      expect(() => Thumbnail(-1, 10), throwsA(predicate<AssertionError>((e) => e.message == 'Width should be a positive number')));
     });
 
     test('Height should be a positive number', () {
-      expect(
-          () => Thumbnail(10, -1),
-          throwsA(predicate<AssertionError>(
-              (e) => e.message == 'Height should be a positive number')));
+      expect(() => Thumbnail(10, -1), throwsA(predicate<AssertionError>((e) => e.message == 'Height should be a positive number')));
     });
   });
 
@@ -1074,8 +958,7 @@ void main() {
     );
 
     test('copyWith', () {
-      final reactionCopiedWith =
-          reaction.copyWith(data: {'text': 'awesome post!'});
+      final reactionCopiedWith = reaction.copyWith(data: {'text': 'awesome post!'});
       expect(reactionCopiedWith.data, {'text': 'awesome post!'});
     });
 
@@ -1104,14 +987,7 @@ void main() {
   });
   group('OG', () {
     test('Image', () {
-      const image = OgImage(
-          image: 'test',
-          url: 'test',
-          secureUrl: 'test',
-          width: 'test',
-          height: 'test',
-          type: 'test',
-          alt: 'test');
+      const image = OgImage(image: 'test', url: 'test', secureUrl: 'test', width: 'test', height: 'test', type: 'test', alt: 'test');
       final imageJson = json.decode(fixture('image.json'));
       final imageFromJson = OgImage.fromJson(imageJson);
       expect(imageFromJson, image);
@@ -1119,14 +995,7 @@ void main() {
 
     group('OG', () {
       test('Image', () {
-        const image = OgImage(
-            image: 'test',
-            url: 'test',
-            secureUrl: 'test',
-            width: 'test',
-            height: 'test',
-            type: 'test',
-            alt: 'test');
+        const image = OgImage(image: 'test', url: 'test', secureUrl: 'test', width: 'test', height: 'test', type: 'test', alt: 'test');
         final imageJson = json.decode(fixture('image.json'));
         final imageFromJson = OgImage.fromJson(imageJson);
         expect(imageFromJson, image);
@@ -1170,16 +1039,7 @@ void main() {
           description: 'test',
           determiner: 'test',
           locale: 'test',
-          images: [
-            OgImage(
-                image: 'test',
-                url: 'test',
-                secureUrl: 'test',
-                width: 'test',
-                height: 'test',
-                type: 'test',
-                alt: 'test')
-          ],
+          images: [OgImage(image: 'test', url: 'test', secureUrl: 'test', width: 'test', height: 'test', type: 'test', alt: 'test')],
           videos: [
             OgVideo(
               image: 'test',
@@ -1213,50 +1073,25 @@ void main() {
           'determiner': 'test',
           'locale': 'test',
           'images': [
-            {
-              'image': 'test',
-              'url': 'test',
-              'secure_url': 'test',
-              'width': 'test',
-              'height': 'test',
-              'type': 'test',
-              'alt': 'test'
-            }
+            {'image': 'test', 'url': 'test', 'secure_url': 'test', 'width': 'test', 'height': 'test', 'type': 'test', 'alt': 'test'}
           ],
           'videos': [
-            {
-              'image': 'test',
-              'url': 'test',
-              'secure_url': 'test',
-              'width': 'test',
-              'height': 'test',
-              'type': 'test',
-              'alt': 'test'
-            }
+            {'image': 'test', 'url': 'test', 'secure_url': 'test', 'width': 'test', 'height': 'test', 'type': 'test', 'alt': 'test'}
           ],
           'audios': [
-            {
-              'audio': 'test',
-              'url': 'test',
-              'secure_url': 'test',
-              'type': 'test'
-            }
+            {'audio': 'test', 'url': 'test', 'secure_url': 'test', 'type': 'test'}
           ]
         });
       });
 
       test('activity attachment', () {
         const openGraph = OpenGraphData(
-            title:
-                ''''Queen' rapper rescheduling dates to 2019 after deciding to &#8220;reevaluate elements of production on the 'NickiHndrxx Tour\'''',
-            url:
-                'https://www.rollingstone.com/music/music-news/nicki-minaj-cancels-north-american-tour-with-future-714315/',
-            description:
-                '''Why choose one when you can wear both? These energizing pairings stand out from the crowd''',
+            title: ''''Queen' rapper rescheduling dates to 2019 after deciding to &#8220;reevaluate elements of production on the 'NickiHndrxx Tour\'''',
+            url: 'https://www.rollingstone.com/music/music-news/nicki-minaj-cancels-north-american-tour-with-future-714315/',
+            description: '''Why choose one when you can wear both? These energizing pairings stand out from the crowd''',
             images: [
               OgImage(
-                image:
-                    'https://www.rollingstone.com/wp-content/uploads/2018/08/GettyImages-1020376858.jpg',
+                image: 'https://www.rollingstone.com/wp-content/uploads/2018/08/GettyImages-1020376858.jpg',
               )
             ]);
 
@@ -1264,16 +1099,12 @@ void main() {
             openGraph,
             OpenGraphData.fromJson(
               const {
-                'description':
-                    '''Why choose one when you can wear both? These energizing pairings stand out from the crowd''',
-                'title':
-                    ''''Queen' rapper rescheduling dates to 2019 after deciding to &#8220;reevaluate elements of production on the 'NickiHndrxx Tour\'''',
-                'url':
-                    'https://www.rollingstone.com/music/music-news/nicki-minaj-cancels-north-american-tour-with-future-714315/',
+                'description': '''Why choose one when you can wear both? These energizing pairings stand out from the crowd''',
+                'title': ''''Queen' rapper rescheduling dates to 2019 after deciding to &#8220;reevaluate elements of production on the 'NickiHndrxx Tour\'''',
+                'url': 'https://www.rollingstone.com/music/music-news/nicki-minaj-cancels-north-american-tour-with-future-714315/',
                 'images': [
                   {
-                    'image':
-                        'https://www.rollingstone.com/wp-content/uploads/2018/08/GettyImages-1020376858.jpg',
+                    'image': 'https://www.rollingstone.com/wp-content/uploads/2018/08/GettyImages-1020376858.jpg',
                   },
                 ],
               },
