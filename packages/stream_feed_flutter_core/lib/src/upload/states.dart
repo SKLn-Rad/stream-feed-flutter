@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:stream_feed/stream_feed.dart';
+import 'package:stream_feed_flutter_core/stream_feed_flutter_core.dart';
 import 'package:stream_feed_flutter_core/src/media.dart';
 
 class FileUploadState with EquatableMixin {

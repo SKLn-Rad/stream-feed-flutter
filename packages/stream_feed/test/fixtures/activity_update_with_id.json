@@ -1,9 +1,0 @@
-{
-  "id": "test",
-  "set": {
-    "hey": "hey"
-  },
-  "unset": [
-    "test"
-  ]
-}
