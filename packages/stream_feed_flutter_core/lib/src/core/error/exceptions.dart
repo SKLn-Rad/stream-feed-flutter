@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:stream_feed_flutter_core/stream_feed_flutter_core.dart';
+
 /// Exception related to api calls
 class StreamApiException implements Exception {
   //TODO: test this
@@ -28,7 +30,7 @@ class StreamApiException implements Exception {
       if (body == null) {
         return null;
       }
-      return json.decode(body);
+      return json.decodeSafe(body);
     } on FormatException {
       return null;
     }

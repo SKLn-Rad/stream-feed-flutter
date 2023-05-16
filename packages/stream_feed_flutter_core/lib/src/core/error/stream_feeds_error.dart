@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
 import 'package:stream_feed_flutter_core/src/core/api/responses.dart';
-import 'package:stream_feed_flutter_core/src/core/error/feeds_error_code.dart';
 import 'package:stream_feed_flutter_core/stream_feed_flutter_core.dart';
 
 /// A custom [Exception] for printing Stream Feeds specific errors.
